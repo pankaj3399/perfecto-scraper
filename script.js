@@ -1,9 +1,11 @@
 import puppeteer from "puppeteer";
 import express from "express";
+import cors from "cors";
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
+app.use(cors());
 app.post("/scrape", async (req, res) => {
   const { url } = req.body;
   if (!url) {
