@@ -1,4 +1,5 @@
-import puppeteer from "puppeteer";
+// import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
 import express from "express";
 import cors from "cors";
 const app = express();
@@ -12,7 +13,14 @@ app.post("/scrape", async (req, res) => {
     return res.status(400).send({ error: "URL is required" });
   }
   try {
-    const browser = await puppeteer.launch({ headless: true });
+    // const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({
+      executablePath:
+        "/opt/render/.cache/puppeteer/chrome/linux-126.0.6478.126/chrome-linux64/chrome", // Correct path to Chrome
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+
     const page = await browser.newPage();
     await page.goto(url, {
       timeout: 90000,
